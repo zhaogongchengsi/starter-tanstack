@@ -1,0 +1,23 @@
+{
+  "projectName": "starter-tanstack",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "npm",
+  "includeExamples": true,
+  "tailwind": true,
+  "addOnOptions": {},
+  "envVarValues": {},
+  "git": true,
+  "install": true,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react",
+  "chosenAddOns": [
+    "shadcn",
+    "table",
+    "better-auth",
+    "tRPC",
+    "events",
+    "tanstack-query"
+  ]
+}
