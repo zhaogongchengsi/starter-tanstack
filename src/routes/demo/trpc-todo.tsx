@@ -30,14 +30,14 @@ function TRPCTodos() {
   }, [addTodo, todo])
 
   return (
-    <main className="demo-page demo-center">
-      <section className="demo-panel w-full max-w-2xl">
-        <p className="island-kicker mb-2">tRPC</p>
-        <h1 className="demo-title mb-6">Todos</h1>
+    <main className="flex min-h-[50vh] items-center justify-center px-4">
+      <section className="w-full max-w-2xl rounded-lg border p-6">
+        <p className="text-sm font-medium text-muted-foreground">tRPC</p>
+        <h1 className="mt-1.5 mb-6 text-xl font-semibold">Todos</h1>
         <ul className="mb-4 space-y-2">
           {data?.map((t) => (
-            <li key={t.id} className="demo-list-item">
-              <span className="text-base font-medium">{t.name}</span>
+            <li key={t.id} className="rounded-md border px-4 py-3">
+              <span className="text-sm font-medium">{t.name}</span>
             </li>
           ))}
         </ul>
@@ -52,12 +52,12 @@ function TRPCTodos() {
               }
             }}
             placeholder="Enter a new todo..."
-            className="demo-input"
+            className="flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
           <button
             disabled={todo.trim().length === 0}
             onClick={submitTodo}
-            className="demo-button"
+            className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
           >
             Add todo
           </button>

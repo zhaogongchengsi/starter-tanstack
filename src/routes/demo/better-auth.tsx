@@ -17,39 +17,39 @@ function BetterAuthDemo() {
 
   if (isPending) {
     return (
-      <main className="demo-page demo-center">
-        <div className="h-5 w-5 animate-spin rounded-full border-2 border-neutral-200 border-t-neutral-900 dark:border-neutral-800 dark:border-t-neutral-100" />
+      <main className="flex min-h-[50vh] items-center justify-center">
+        <div className="h-5 w-5 animate-spin rounded-full border-2 border-muted border-t-foreground" />
       </main>
     )
   }
 
   if (session?.user) {
     return (
-      <main className="demo-page demo-center">
-        <section className="demo-panel w-full max-w-md space-y-6">
+      <main className="flex min-h-[50vh] items-center justify-center px-4">
+        <section className="w-full max-w-md space-y-6 rounded-lg border p-6">
           <div className="space-y-1.5">
-            <p className="island-kicker mb-2">Better Auth</p>
-            <h1 className="demo-title">Welcome back</h1>
-            <p className="demo-muted text-sm">
+            <p className="text-sm font-medium text-muted-foreground">Better Auth</p>
+            <h1 className="text-xl font-semibold">Welcome back</h1>
+            <p className="text-sm text-muted-foreground">
               You're signed in as {session.user.email}
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             {session.user.image ? (
-              <img src={session.user.image} alt="" className="h-10 w-10" />
+              <img src={session.user.image} alt="" className="h-10 w-10 rounded-full" />
             ) : (
-              <div className="h-10 w-10 bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center">
-                <span className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
+                <span className="text-sm font-medium">
                   {session.user.name?.charAt(0).toUpperCase() || 'U'}
                 </span>
               </div>
             )}
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium">
                 {session.user.name}
               </p>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">
+              <p className="truncate text-xs text-muted-foreground">
                 {session.user.email}
               </p>
             </div>
@@ -59,18 +59,18 @@ function BetterAuthDemo() {
             onClick={() => {
               void authClient.signOut()
             }}
-            className="demo-button demo-button-secondary w-full"
+            className="w-full rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
           >
             Sign out
           </button>
 
-          <p className="demo-muted text-center text-xs">
+          <p className="text-center text-xs text-muted-foreground">
             Built with{' '}
             <a
               href="https://better-auth.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium"
+              className="font-medium underline underline-offset-4"
             >
               BETTER-AUTH
             </a>
@@ -113,13 +113,13 @@ function BetterAuthDemo() {
   }
 
   return (
-    <main className="demo-page demo-center">
-      <section className="demo-panel w-full max-w-md">
-        <p className="island-kicker mb-2">Better Auth</p>
-        <h1 className="demo-title">
+    <main className="flex min-h-[50vh] items-center justify-center px-4">
+      <section className="w-full max-w-md rounded-lg border p-6">
+        <p className="text-sm font-medium text-muted-foreground">Better Auth</p>
+        <h1 className="mt-1.5 text-xl font-semibold">
           {isSignUp ? 'Create an account' : 'Sign in'}
         </h1>
-        <p className="demo-muted mt-2 mb-6 text-sm">
+        <p className="mt-2 mb-6 text-sm text-muted-foreground">
           {isSignUp
             ? 'Enter your information to create an account'
             : 'Enter your email below to login to your account'}
@@ -139,7 +139,7 @@ function BetterAuthDemo() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="demo-input"
+                className="flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 required
               />
             </div>
@@ -154,7 +154,7 @@ function BetterAuthDemo() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="demo-input"
+              className="flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               required
             />
           </div>
@@ -171,26 +171,26 @@ function BetterAuthDemo() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="demo-input"
+              className="flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               required
               minLength={8}
             />
           </div>
 
           {error && (
-            <div className="demo-alert demo-alert-danger">
-              <p className="text-sm text-red-600">{error}</p>
+            <div className="rounded-md border border-destructive/50 bg-destructive/10 px-3 py-2">
+              <p className="text-sm text-destructive">{error}</p>
             </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="demo-button w-full"
+            className="inline-flex h-9 w-full items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-400 border-t-white dark:border-neutral-600 dark:border-t-neutral-900" />
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground" />
                 <span>Please wait</span>
               </span>
             ) : isSignUp ? (
@@ -208,7 +208,7 @@ function BetterAuthDemo() {
               setIsSignUp(!isSignUp)
               setError('')
             }}
-            className="demo-muted text-sm transition-colors hover:text-[var(--sea-ink)]"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             {isSignUp
               ? 'Already have an account? Sign in'
@@ -216,7 +216,7 @@ function BetterAuthDemo() {
           </button>
         </div>
 
-        <p className="demo-muted mt-6 text-center text-xs">
+        <p className="mt-6 text-center text-xs text-muted-foreground">
           Built with{' '}
           <a
             href="https://better-auth.com"

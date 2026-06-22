@@ -141,20 +141,20 @@ function TableDemo() {
   }, [table.getState().columnFilters[0]?.id])
 
   return (
-    <main className="demo-page demo-page-wide">
+    <main className="mx-auto max-w-5xl px-4 py-12">
       <div>
-        <p className="island-kicker mb-2">TanStack Table</p>
-        <h1 className="demo-title mb-6">Table Demo</h1>
+        <p className="text-sm font-medium text-muted-foreground">TanStack Table</p>
+        <h1 className="mt-1.5 mb-6 text-xl font-semibold">Table Demo</h1>
         <DebouncedInput
           value={globalFilter ?? ''}
           onChange={(value) => setGlobalFilter(String(value))}
-          className="demo-input"
+          className="flex h-9 w-full max-w-sm rounded-md border bg-transparent px-3 py-1 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           placeholder="Search all columns..."
         />
       </div>
       <div className="h-4" />
-      <div className="demo-table-shell">
-        <table className="demo-table text-sm">
+      <div className="overflow-auto rounded-lg border">
+        <table className="w-full text-sm">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -163,14 +163,14 @@ function TableDemo() {
                     <th
                       key={header.id}
                       colSpan={header.colSpan}
-                      className="px-4 py-3 text-left"
+                      className="px-4 py-3 text-left font-medium text-muted-foreground"
                     >
                       {header.isPlaceholder ? null : (
                         <>
                           <div
                             {...{
                               className: header.column.getCanSort()
-                                ? 'cursor-pointer select-none transition-colors hover:text-[var(--lagoon-deep)]'
+                                ? 'cursor-pointer select-none transition-colors hover:text-foreground'
                                 : '',
                               onClick: header.column.getToggleSortingHandler(),
                             }}
@@ -198,57 +198,53 @@ function TableDemo() {
             ))}
           </thead>
           <tbody>
-            {table.getRowModel().rows.map((row) => {
-              return (
-                <tr key={row.id} className="transition-colors">
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td key={cell.id} className="px-4 py-3">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id} className="border-t transition-colors hover:bg-muted/50">
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="px-4 py-3">
+                    {flexRender(
+                      cell.column.columnDef.cell,
+                      cell.getContext(),
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
       <div className="h-4" />
-      <div className="demo-muted flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
         <button
-          className="demo-button demo-button-secondary"
+          className="rounded-md border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent disabled:opacity-50"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
           {'<<'}
         </button>
         <button
-          className="demo-button demo-button-secondary"
+          className="rounded-md border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent disabled:opacity-50"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
           {'<'}
         </button>
         <button
-          className="demo-button demo-button-secondary"
+          className="rounded-md border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent disabled:opacity-50"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
           {'>'}
         </button>
         <button
-          className="demo-button demo-button-secondary"
+          className="rounded-md border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent disabled:opacity-50"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
           {'>>'}
         </button>
         <span className="flex items-center gap-1">
-          <div>Page</div>
+          <span>Page</span>
           <strong>
             {table.getState().pagination.pageIndex + 1} of{' '}
             {table.getPageCount()}
@@ -263,7 +259,7 @@ function TableDemo() {
               const page = e.target.value ? Number(e.target.value) - 1 : 0
               table.setPageIndex(page)
             }}
-            className="demo-input demo-input-fit py-1"
+            className="h-8 w-16 rounded-md border bg-transparent px-2 py-1 text-sm"
           />
         </span>
         <select
@@ -271,7 +267,7 @@ function TableDemo() {
           onChange={(e) => {
             table.setPageSize(Number(e.target.value))
           }}
-          className="demo-select demo-input-fit py-1"
+          className="h-8 rounded-md border bg-transparent px-2 py-1 text-sm"
         >
           {[10, 20, 30, 40, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
@@ -280,18 +276,24 @@ function TableDemo() {
           ))}
         </select>
       </div>
-      <div className="demo-muted mt-4">
+      <div className="mt-4 text-sm text-muted-foreground">
         {table.getPrePaginationRowModel().rows.length} Rows
       </div>
       <div className="mt-4 flex gap-2">
-        <button onClick={() => rerender()} className="demo-button">
+        <button
+          onClick={() => rerender()}
+          className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        >
           Force Rerender
         </button>
-        <button onClick={() => refreshData()} className="demo-button">
+        <button
+          onClick={() => refreshData()}
+          className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        >
           Refresh Data
         </button>
       </div>
-      <pre className="demo-code-block mt-4 overflow-auto">
+      <pre className="mt-4 max-h-48 overflow-auto rounded-md border bg-muted/50 p-4 text-xs">
         {JSON.stringify(
           {
             columnFilters: table.getState().columnFilters,
@@ -314,7 +316,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
       value={(columnFilterValue ?? '') as string}
       onChange={(value) => column.setFilterValue(value)}
       placeholder={`Search...`}
-      className="demo-input py-1"
+      className="h-8 w-full rounded-md border bg-transparent px-2 py-1 text-sm"
     />
   )
 }
