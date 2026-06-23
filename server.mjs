@@ -1,31 +1,27 @@
+import fs from "node:fs";
+import path from "node:path";
+import { Readable } from "node:stream";
 import handler from "./dist/server/server.js";
+import { serve } from "srvx";
 
+const clientDir = path.resolve("./dist/client");
 
-Bun.serve({
+serve({
   port: 3000,
 
-  async fetch(req) {
-    const url = new URL(req.url);
+  async fetch(request) {
+    const url = new URL(request.url);
+    const filePath = path.join(clientDir, url.pathname);
 
-    // 2. 静态资源 fallback（非常关键）
-    const filePath = `./dist/client${url.pathname}`;
-
-    const file = Bun.file(filePath);
-
-    if (await file.exists()) {
-      return new Response(file);
-    }
-
-    // 1. 先走 SSR handler（TanStack）
     try {
-      const res = await handler.fetch(req);
-      if (res) return res;
-    } catch (e) {
-      console.error("SSR error:", e);
-    }
+      const stat = await fs.promises.stat(filePath);
 
-    return new Response(null, {
-      status: 404,
-    });
+      if (stat.isFile()) {
+        const stream = fs.createReadStream(filePath);
+        return new Response(Readable.toWeb(stream));
+      }
+    } catch {}
+
+    return handler.fetch(request);
   },
 });
